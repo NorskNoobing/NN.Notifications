@@ -1,17 +1,16 @@
 function Send-DiscordMessage {
     param (
-        [Parameter(Mandatory)][string]$message,
-        [Parameter(Mandatory)][string]$uri
+        [Parameter(Mandatory)][string]$Message,
+        [Parameter(Mandatory)][string]$Uri
     )
 
-    $InvokeRestMethodSplat = @{
-        Body = [PSCustomObject]@{
-                content = $message
-            } | ConvertTo-Json
-            
-        ContentType = 'Application/Json'
-        Method = 'POST'
-        Uri = $uri
+    $Splat = @{
+        "Uri" = $Uri 
+        "Method" = "POST"
+        "ContentType" = "Application/Json"
+        "Body" = @{
+            "content" = $Message
+        } | ConvertTo-Json
     }
-    Invoke-RestMethod @InvokeRestMethodSplat
+    Invoke-RestMethod @Splat
 }

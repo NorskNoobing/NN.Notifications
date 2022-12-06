@@ -1,17 +1,16 @@
 function Send-TeamsMessage {
     param (
-        [Parameter(Mandatory)]$message,
-        [Parameter(Mandatory)]$hookUri
+        [Parameter(Mandatory)]$Message,
+        [Parameter(Mandatory)]$Uri
     )
 
-    $InvokeRestMethodSplat = @{
-        Body        = [PSCustomObject]@{
-            text = $message
+    $Splat = @{
+        "Uri" = $hookUri
+        "Method" = "POST"
+        "ContentType" = "Application/Json"
+        "Body" = @{
+            "text" = $message
         } | ConvertTo-Json
-            
-        ContentType = 'Application/Json'
-        Method      = 'POST'
-        Uri         = $hookUri
     }
-    Invoke-RestMethod @InvokeRestMethodSplat
+    Invoke-RestMethod @Splat
 }
